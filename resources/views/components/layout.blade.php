@@ -39,12 +39,7 @@
         <ul class="flex space-x-6 mr-6 text-lg">
             @auth
             <li>
-                <span class="font-bold uppercase">
-                    Welcome {{auth()->user()->name}}
-                </span>
-            </li>
-            <li>
-                <a href="/listings/manage" class="hover:text-laravel"
+                <a href="/items/manage" class="hover:text-laravel"
                     ><i class="fa-solid fa-gear"></i>
                     Manage Listings</a
                 >
@@ -81,9 +76,9 @@
         <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
 
         <a
-            href="/listings/create/"
+            href="/items/create"
             class="absolute top-1/3 right-10 bg-black text-white py-2 px-5 rounded-lg"
-            >Post Job</a
+            >Post Listing</a
         >
     </footer>
 </html>

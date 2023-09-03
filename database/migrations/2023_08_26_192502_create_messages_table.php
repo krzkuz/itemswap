@@ -13,16 +13,22 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sender_id');
-            $table->unsignedBigInteger('recipient_id');
-            $table->unsignedBigInteger('item_id');
             $table->string('title');
             $table->longText('body');
             $table->timestamps();
 
-            $table->foreign('sender_id')->references('id')->on('users');
-            $table->foreign('recipient_id')->references('id')->on('users');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreignId('item_id')
+                ->nullable()
+                ->constrained('items', 'id')
+                ->onDelete('set null');
+            $table->foreignId('sender_id')
+                ->nullable()
+                ->constrained('users', 'id')
+                ->onDelete('set null');
+            $table->foreignId('recipient_id')
+                ->nullable()
+                ->constrained('users', 'id')
+                ->onDelete('set null');
         });
     }
 

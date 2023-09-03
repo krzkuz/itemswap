@@ -8,7 +8,7 @@
     
     
     @foreach($items as $item)
-        <x-item-card :item="$item"/>
+        <x-item-manage-card :item="$item"/>
     @endforeach
 </div>
 @endsection

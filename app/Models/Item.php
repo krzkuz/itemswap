@@ -9,8 +9,15 @@ class Item extends Model
 {
     use HasFactory;
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'user_id'
+    ];
+
+    public function owner(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tags(){

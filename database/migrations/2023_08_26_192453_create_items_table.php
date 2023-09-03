@@ -16,13 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->string('image')->nullable();
-            $table->unsignedBigInteger('user_id');
-            // $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            // $table->foreign('tag_id')->references('id')->on('tags');
-
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
         });
     }
 
