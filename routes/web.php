@@ -22,15 +22,15 @@ Route::get('/items/manage', [ItemController::class, 'manage']);
 //Show form to create item
 Route::get('/items/create', [ItemController::class, 'create']);
 //Create item in database
-Route::post('/items', [ItemController::class, 'store']);//
+Route::post('/items', [ItemController::class, 'store']);
 //Show form to edit item
-Route::get('/items/edit', [ItemController::class, 'edit']);//
+Route::get('/items/{item}/edit', [ItemController::class, 'edit']);
 //Show one item
 Route::get('/items/{item}', [ItemController::class, 'show']);
 //Update item
-Route::put('/items/{item}', [ItemController::class, 'update']);//
+Route::put('/items/{item}', [ItemController::class, 'update']);
 //Delete item
-Route::delete('/items/{item}', [ItemController::class, 'delete']);//
+Route::delete('/items/{item}', [ItemController::class, 'delete']);
 
 
 // Users

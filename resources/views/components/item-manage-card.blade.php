@@ -18,10 +18,11 @@
                 <i class="fa-solid fa-location-dot"></i> {{$item->owner->address}}
             </div>
             <div class="mt-10 flex">
-                <a href="/items/edit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium 
+                <a href="/items/{{$item->id}}/edit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium 
                     rounded-lg text-sm px-5 py-2.5 mr-5">Edit</a>
-                <form action="/items/delete" method="POST">
+                <form action="/items/{{$item->id}}" method="POST">
                     @csrf
+                    @method('DELETE')
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium 
                         rounded-lg text-sm px-5 py-2.5 ">Delete</button>
                 </form>

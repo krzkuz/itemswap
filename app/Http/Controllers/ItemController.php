@@ -39,10 +39,44 @@ class ItemController extends Controller
         if($request->hasFile('image')){
             $formFields['image'] = $request->file('image')->store('images', 'public');
         }
-        
+
         $formFields['user_id'] = auth()->id();
 
         Item::create($formFields);
         return redirect('/')->with('message', 'You have created a listing');
+    }
+
+    public function edit(Item $item){
+        return view('items.edit', [
+            'item' => $item
+        ]);
+    }
+
+    public function update(Request $request, Item $item){
+        if($item->user_id != auth()->id()){
+            abort(403, 'Unauthorized action');
+        }
+
+        $formFields = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        if($request->hasFile('image')){
+            $formFields['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $item->update($formFields);
+
+        return redirect('/')->with('message', 'Listing updated successfully');
+    }
+
+    public function delete(Item $item){
+        if($item->user_id != auth()->id()){
+            abort(403, 'Unauthorized action');
+        }
+
+        $item->delete();
+        return redirect('/')->with('message', 'Listing deleted successfully');
     }
 }
