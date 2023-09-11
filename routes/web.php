@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +33,8 @@ Route::get('/items/{item}', [ItemController::class, 'show']);
 Route::put('/items/{item}', [ItemController::class, 'update']);
 //Delete item
 Route::delete('/items/{item}', [ItemController::class, 'delete']);
+//Swap item request
+
 
 
 // Users
@@ -44,4 +48,22 @@ Route::get('/login', [UserController::class, 'login']);
 Route::post('/authenticate', [UserController::class, 'authenticate']);
 //Logout user
 Route::post('/logout', [UserController::class, 'logout']);
+//Show edit profile form
+Route::get('/edit-profile', [UserController::class, 'edit'])->name('edit-profile');
+//Update profile
+Route::post('/update', [UserController::class, 'update'])->name('update-profile');
+
+
+//Pictures
+//Delete picture
+Route::delete('/picture/delete/{picture}', [ImageController::class, 'destroy'])->name('delete-picture');
+//Set main picture
+Route::post('/picture/set-main/{picture}', [ImageController::class, 'mainPicture'])->name('main-picture');
+
+
+//Messages
+//Show message creation form
+Route::post(('/messages/new'), [MessageController::class, 'create'])->name('create-message');
+//Create message
+Route::post('messages/send', [MessageController::class, 'send'])->name('send-message');
 

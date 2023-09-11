@@ -60,4 +60,25 @@ class UserController extends Controller
 
         return redirect('/')->with('message', 'You have been logged out');
     }
+
+    public function edit(){
+        $user = auth()->user();
+        return view('users.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request){
+        $formFields = $request->validate([
+            'first_name' => ['required', 'alpha'],
+            'last_name' => ['required', 'alpha'],
+            'country' => ['required', 'alpha'],
+            'city' => ['required', 'alpha'],
+            'address' => ['required'],
+        ]);
+        $user = auth()->user();
+        $user->update($formFields);
+
+        return redirect('/')->with('message', 'You have successfully updated your profile');
+    }
 }

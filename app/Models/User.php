@@ -24,7 +24,7 @@ class User extends Authenticatable
         'last_name',
         'country',
         'city',
-        'adress'
+        'address'
     ];
 
     /**

@@ -2,13 +2,48 @@
 
 @extends('components.layout')
 @section('content')
-<div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<div class="bg-zinc-600 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
-            Create a Listing
+            Edit your Listing
         </h2>
-        <p class="mb-4">Create a listing to swap items</p>
+        {{-- <p class="mb-4">Create a listing to swap items</p> --}}
     </header>
+
+    @php
+        $firstIteration = true;
+    @endphp
+
+    <div class="mb-6">
+        <label for="image" class="inline-block text-lg mb-2">
+            Pictures of the item
+        </label>
+        @foreach ($images as $image)
+            <div class="flex items-center">
+                <img
+                class="w-28 h-28 p-5"
+                src="{{$image ? asset('storage/' . $image->image_path):
+                asset('images/no-image.png')}}"
+                alt=""
+                />
+                <form action="{{route('delete-picture', $image->id)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-black text-gray-400 text-xs py-2 px-2 mr-3 rounded-lg hover:text-white hover:bg-gray-900">Delete Picture</button>
+                </form>
+                @if (!$firstIteration)
+                    <form action="{{route('main-picture', $image->id)}}" method="POST">
+                        @csrf
+                        <button class="bg-black text-gray-400 text-xs py-2 px-2 rounded-lg hover:text-white hover:bg-gray-900">Set as main picture</button>
+                    </form>
+                @endif
+            </div>
+            
+            @php
+                $firstIteration = false;
+            @endphp
+        @endforeach
+    </div>
 
     <form action="/items/{{$item->id}}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -37,7 +72,7 @@
                 class="border border-gray-200 rounded p-2 w-full"
                 name="tags"
                 placeholder="Example: clothing, good condition"
-                value="{{$item->tags}}"
+                value="{{$tags}}"
             />
             @error('tags')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>                
@@ -46,12 +81,15 @@
 
         <div class="mb-6">
             <label for="image" class="inline-block text-lg mb-2">
-                Picture of the item
+                Add pictures
             </label>
+
             <input
                 type="file"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="image"
+                name="images[]"
+                value="{{$item->images}}"
+                multiple
             />
             @error('image')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>                

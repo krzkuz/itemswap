@@ -6,9 +6,8 @@
     <p>No items found</p>
     @endif
     
-    
-    @foreach($items as $item)
+</div>
+@foreach($items as $item)
         <x-item-manage-card :item="$item"/>
     @endforeach
-</div>
 @endsection

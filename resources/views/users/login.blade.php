@@ -1,12 +1,12 @@
 @extends('components.layout')
 @section('content')
 
-<div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<div class="bg-zinc-600 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
 <header class="text-center">
     <h2 class="text-2xl font-bold uppercase mb-1">
-        Register
+        Login
     </h2>
-    <p class="mb-4">Create an account to swap items</p>
+    <p class="mb-4">Log in to swap items</p>
 </header>
 
 <form action="/authenticate" method="POST">

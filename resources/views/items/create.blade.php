@@ -1,6 +1,6 @@
 @extends('components.layout')
 @section('content')
-<div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<div class="bg-gray-700 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
             Create a Listing
@@ -44,12 +44,13 @@
 
         <div class="mb-6">
             <label for="image" class="inline-block text-lg mb-2">
-                Picture of the item
+                Pictures of the item
             </label>
             <input
                 type="file"
                 class="border border-gray-200 rounded p-2 w-full"
-                name="image"
+                name="images[]"
+                multiple
             />
             @error('image')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>                
@@ -66,7 +67,7 @@
                 class="border border-gray-200 rounded p-2 w-full"
                 name="description"
                 rows="10"
-                placeholder="Include tasks, requirements, salary, etc"
+                placeholder="Include condition and other important details"
                 value="{{old('description')}}"
             ></textarea>
             @error('description')
