@@ -33,7 +33,7 @@
 <body class="mb-48 bg-neutral-800">
     <nav class="flex w-full justify-between items-center mb-4 p-4 bg-neutral-900">
         <a href="/" class="text-2xl text-gray-400 hover:text-laravel">
-            ImageSwap
+            ItemSwap
             {{-- <img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo"/> --}}
         </a>
         <ul class="flex space-x-10 mr-8 text-lg">
@@ -43,7 +43,7 @@
                     ><i class="fa-solid fa-user"></i> Edit profile</a>
             </li>
             <li>
-                <a href="/" class="text-gray-400 hover:text-laravel"
+                <a href="{{route('messages', ['conversation'=>null])}}" class="text-gray-400 hover:text-laravel"
                     ><i class="fa-solid fa-message"></i>
                     Messages</a
                 >

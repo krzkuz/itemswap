@@ -63,7 +63,9 @@ Route::post('/picture/set-main/{picture}', [ImageController::class, 'mainPicture
 
 //Messages
 //Show message creation form
-Route::post(('/messages/new'), [MessageController::class, 'create'])->name('create-message');
+Route::get(('/messages/new'), [MessageController::class, 'create'])->name('create-message');
 //Create message
 Route::post('messages/send', [MessageController::class, 'send'])->name('send-message');
+//Show messages
+Route::get('/messages/{conversation?}', [MessageController::class, 'messages'])->name('messages');
 

@@ -55,10 +55,13 @@
                             </button>
                         </form>
 
-                        <form action="{{route('create-message')}}" method="POST">
-                            @csrf
-                            <input type="text" name="itemId" value="{{$item->id}}" hidden>
-                            <input type="text" name="recipientId" value="{{$item->user_id}}" hidden>
+                        <form action="{{route('create-message')}}" method="GET">
+                            @php
+                            session([
+                                'itemId' => $item->id,
+                                'recipientId' => $item->user_id
+                            ]);
+                            @endphp
                             <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
                                 <i class="fa-solid fa-message"></i> Message
                             </button>

@@ -73,6 +73,7 @@ class ItemController extends Controller
                 if($firstIteration){
                     $newImage->is_main = true;
                 }
+                $firstIteration = false;
                 $item->images()->save($newImage);
             }
         }
@@ -122,8 +123,7 @@ class ItemController extends Controller
                 $item->images()->save($newImage);
             }
         }
-        // $item->save();
-
+        
         $item->update($formFields);
 
         return redirect('/')->with('message', 'Listing updated successfully');

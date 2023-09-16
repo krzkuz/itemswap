@@ -11,24 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('body');
             $table->timestamps();
 
             $table->foreignId('item_id')
                 ->nullable()
-                ->constrained('items', 'id')
+                ->constrained()
                 ->onDelete('set null');
-            $table->foreignId('sender_id')
+            $table->foreignId('participant1_id')
                 ->nullable()
                 ->constrained('users', 'id')
                 ->onDelete('set null');
-            $table->foreignId('recipient_id')
+            $table->foreignId('participant2_id')
                 ->nullable()
                 ->constrained('users', 'id')
                 ->onDelete('set null');
+            $table->unique(['item_id', 'participant1_id', 'participant2_id']);
         });
     }
 
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('conversation');
     }
 };
