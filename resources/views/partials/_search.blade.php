@@ -1,22 +1,17 @@
 <form action="/">
-    <div class="relative border-2 border-gray-100 m-4 rounded-lg">
-        <div class="absolute top-4 left-3">
-            <i
-                class="fa fa-search text-gray-400 z-20 hover:text-gray-500"
-            ></i>
-        </div>
+    <div class="relative m-4 rounded-lg">
         <input
             type="text"
             name="search"
-            class="h-14 w-full pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
+            class="h-14 w-full pl-5 pr-20 rounded-lg z-0"
             placeholder="Search for items..."
         />
         <div class="absolute top-2 right-2">
             <button
                 type="submit"
-                class="h-10 w-20 text-gray-400 rounded-lg bg-black hover:bg-neutral-700"
+                class="px-1 py-1 hover:text-neutral-400"
             >
-                Search
+            <i class="fa-solid fa-magnifying-glass fa-2x"></i>
             </button>
         </div>
     </div>

@@ -1,3 +1,3 @@
-<div {{$attributes->merge(['class'=>'bg-zinc-700 rounded p-6 m-25 w-5/6  h-4/6'])}}>
+<div {{$attributes->merge(['class'=>'flex flex-col bg-neutral-700 p-10 rounded max-w-lg mx-auto mt-24'])}}>
     {{$slot}}
 </div>

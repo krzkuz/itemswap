@@ -32,30 +32,30 @@
 </head>
 <body class="mb-48 bg-neutral-800">
     <nav class="flex w-full justify-between items-center mb-4 p-4 bg-neutral-900">
-        <a href="/" class="text-2xl text-gray-400 hover:text-laravel">
+        <a href="/" class="ml-10 text-2xl text-gray-400 hover:text-white">
             ItemSwap
             {{-- <img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo"/> --}}
         </a>
-        <ul class="flex space-x-10 mr-8 text-lg">
+        <ul class="flex space-x-10 mr-8 text-sm font-semibold">
             @auth
             <li>
-                <a href="{{route('edit-profile')}}" class="text-gray-400 hover:text-laravel"
+                <a href="{{route('edit-profile')}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-user"></i> Edit profile</a>
             </li>
             <li>
-                <a href="{{route('messages', ['conversation'=>null])}}" class="text-gray-400 hover:text-laravel"
+                <a href="{{route('messages', ['conversation'=>null])}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-message"></i>
                     Messages</a
                 >
             </li>
             <li>
-                <a href="/" class="text-gray-400 hover:text-laravel"
+                <a href="/" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-right-left"></i>
                     Swaps</a
                 >
             </li>
             <li>
-                <a href="/items/manage" class="text-gray-400 hover:text-laravel"
+                <a href="/items/manage" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-gear"></i>
                     Manage Listings</a
                 >
@@ -63,19 +63,19 @@
             <li>
                 <form class="inline" action="/logout" method="POST">
                     @csrf
-                    <button type="submit" class="text-gray-400 hover:text-laravel">
+                    <button type="submit" class="text-gray-400 hover:text-white">
                         <i class="fa-solid fa-door-closed"></i> Logout
                     </button>
                 </form>
             </li>
             @else
             <li>
-                <a href="/register" class="text-gray-400 hover:text-laravel"
+                <a href="/register" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-user-plus"></i> Register</a
                 >
             </li>
             <li>
-                <a href="/login" class="text-gray-400 hover:text-laravel"
+                <a href="/login" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-arrow-right-to-bracket"></i>
                     Login</a
                 >
@@ -93,7 +93,7 @@
 
         <a
             href="/items/create"
-            class="absolute top-1/3 right-10 bg-black text-gray-400 py-2 px-5 rounded-lg hover:text-laravel"
+            class="absolute top-1/3 right-10 bg-black text-gray-200 py-2 px-5 rounded-lg hover:text-laravel"
             >Post Listing</a
         >
     </footer>

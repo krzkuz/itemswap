@@ -1,7 +1,8 @@
 @extends('components.layout')
 @section('content')
-<div class="bg-gray-700 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
-    <header class="text-center">
+{{-- <div class="flex flex-col bg-neutral-700 p-10 rounded max-w-lg mx-auto mt-24"> --}}
+<x-card>
+    <header class="flex flex-col text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
             Create a Listing
         </h2>
@@ -16,7 +17,7 @@
                 Listing Title</label>
             <input
                 type="text"
-                class="border border-gray-200 rounded p-2 w-full"
+                class="border border-gray-200 rounded p-2 w-full flex"
                 name="name"
                 placeholder="Example: Book to swap"
                 value="{{old('name')}}"
@@ -32,7 +33,7 @@
             </label>
             <input
                 type="text"
-                class="border border-gray-200 rounded p-2 w-full"
+                class="border border-gray-200 rounded p-2 w-full flex"
                 name="tags"
                 placeholder="Example: clothing, good condition"
                 value="{{old('tags')}}"
@@ -48,7 +49,7 @@
             </label>
             <input
                 type="file"
-                class="border border-gray-200 rounded p-2 w-full"
+                class="border border-gray-200 rounded p-2 w-full flex"
                 name="images[]"
                 multiple
             />
@@ -64,7 +65,7 @@
                 Item Description
             </label>
             <textarea
-                class="border border-gray-200 rounded p-2 w-full"
+                class="border border-gray-200 rounded p-2 w-full flex"
                 name="description"
                 rows="10"
                 placeholder="Include condition and other important details"
@@ -76,12 +77,13 @@
         </div>
 
         <div class="mb-6">
-            <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+            <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
                 Create a lisitng
             </button>
 
-            <a href="/" class="text-black ml-4"> Back </a>
+            <a href="/" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2"> Back </a>
         </div>
     </form>
-</div>
+</x-card>
+{{-- </div> --}}
 @endsection

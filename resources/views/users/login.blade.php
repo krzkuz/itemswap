@@ -1,7 +1,7 @@
 @extends('components.layout')
 @section('content')
 
-<div class="bg-zinc-600 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<x-card>
 <header class="text-center">
     <h2 class="text-2xl font-bold uppercase mb-1">
         Login
@@ -47,7 +47,7 @@
     <div class="mb-6">
         <button
             type="submit"
-            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
+            class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2"
         >
             Log In
         </button>
@@ -56,11 +56,11 @@
     <div class="mt-8">
         <p>
             Don't have an account?
-            <a href="/register" class="text-laravel"
+            <a href="/register" class="ml-5 text-white hover:text-black"
                 >Register</a
             >
         </p>
     </div>
 </form>
-</div>
+</x-card>
 @endsection

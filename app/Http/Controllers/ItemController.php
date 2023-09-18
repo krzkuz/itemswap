@@ -39,15 +39,17 @@ class ItemController extends Controller
     }
 
     public function manage(){ 
+        $currentUserId = auth()->id();
         $items = auth()->user()
             ->items()
             ->with(['images' => function($query){
                 $query->orderBy('is_main', 'desc');
         }])
-        ->get();
+        ->simplePaginate(6);
 
         return view('items.manage', [
             'items' => $items,
+            'currentUserId' => $currentUserId,
         ]);
     }
 

@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ConversationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,9 +64,9 @@ Route::post('/picture/set-main/{picture}', [ImageController::class, 'mainPicture
 
 //Messages
 //Show message creation form
-Route::get(('/messages/new'), [MessageController::class, 'create'])->name('create-message');
+Route::get(('/conversation/new'), [ConversationController::class, 'create'])->name('create-conversation');
 //Create message
-Route::post('messages/send', [MessageController::class, 'send'])->name('send-message');
+Route::post('messages/send/{conversation}', [MessageController::class, 'send'])->name('send-message');
 //Show messages
 Route::get('/messages/{conversation?}', [MessageController::class, 'messages'])->name('messages');
 

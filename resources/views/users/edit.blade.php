@@ -1,12 +1,11 @@
 @extends('components.layout')
 @section('content')
 
-<div class="bg-zinc-600 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<x-card>
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
             Edit your profile
         </h2>
-        {{-- <p class="mb-4">Log in to swap items</p> --}}
     </header>
 
     <form action="{{route('update-profile')}}" method="POST">
@@ -89,11 +88,11 @@
         <div class="mb-6">
             <button
                 type="submit"
-                class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
+                class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2"
             >
                 Save
             </button>
         </div>
     </form>
-</div>
+</x-card>
 @endsection

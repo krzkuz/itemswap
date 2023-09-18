@@ -9,40 +9,42 @@ use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
-    public function create(){
-        $recipientId = session('recipientId');
-        $itemId = session('itemId');
-        session()->forget('recipientId', 'itemId');
-        return view('messages.create', [
-            'recipientId' => $recipientId,
-            'itemId' => $itemId,
-        ]);
-    }
+    // public function create(){
+    //     $recipientId = session('recipientId');
+    //     $itemId = session('itemId');
+    //     session()->forget('recipientId', 'itemId');
+    //     return view('messages.create', [
+    //         'recipientId' => $recipientId,
+    //         'itemId' => $itemId,
+    //     ]);
+    // }
 
-    public function send(Request $request){
+    public function send(Request $request, $conversationId){
+        // dd($request['itemId'], $request['recipientId']);
+        // dd($conversationId);
         $formFields = $request->validate([
             'body' => 'required',
         ]);
 
-        $participant1_id = (int)$request['recipientId'];
-        $participant2_id = auth()->id();
+        // $participant1_id = (int)$request['recipientId'];
+        // $participant2_id = auth()->id();
 
-        //sorting participants ids
-        $sortedParticipantIds = [$participant1_id, $participant2_id];
-        sort($sortedParticipantIds);
+        // //sorting participants ids
+        // $sortedParticipantIds = [$participant1_id, $participant2_id];
+        // sort($sortedParticipantIds);
 
-        $conversation = Conversation::firstOrCreate([
-            'item_id' => $request['itemId'],
-            'participant1_id' => $sortedParticipantIds[0],
-            'participant2_id' => $sortedParticipantIds[1]
-        ]);
-
+        // $conversation = Conversation::firstOrCreate([
+        //     'item_id' => $request['itemId'],
+        //     'participant1_id' => $sortedParticipantIds[0],
+        //     'participant2_id' => $sortedParticipantIds[1]
+        // ]);
+        $conversation = Conversation::find($conversationId);
         $conversation->messages()->create([
             'body' => $formFields['body'],
             'sender_id' => auth()->id()
         ]);
 
-        return redirect('/')->with('message', 'Message sent');
+        return redirect()->route('messages', ['conversation' => (int)$conversationId]);
     }
 
     public function messages($id = null){

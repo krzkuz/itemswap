@@ -1,13 +1,14 @@
 @extends('components.layout')
 @section('content')
-<div class="lg:grid gap-4 space-y-4 md:space-y-0 mx-4">
 
+<div class="flex justify-center mx-4 pb-5">
     @if(count($items) == 0)
-    <p>No items found</p>
+    <p class="font-bold text-gray-400">No items found</p>
     @endif
-    
 </div>
-@foreach($items as $item)
-        <x-item-manage-card :item="$item"/>
-    @endforeach
+
+@foreach($items as $item)    
+    <x-item-manage-card :currentUserId="$currentUserId" :item="$item" />
+@endforeach
+
 @endsection
