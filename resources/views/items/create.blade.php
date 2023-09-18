@@ -9,7 +9,7 @@
         <p class="mb-4">Create a listing to swap items</p>
     </header>
 
-    <form action="/items" method="POST" enctype="multipart/form-data">
+    <form action="{{route('create-listing')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-6">

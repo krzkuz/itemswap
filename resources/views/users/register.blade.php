@@ -9,7 +9,7 @@
     <p class="mb-4">Create an account to swap items</p>
 </header>
 
-<form action="/users" method="POST">
+<form action="{{route('create-user')}}" method="POST">
     @csrf
     <div class="mb-6">
         <label for="email" class="inline-block text-lg mb-2"

@@ -37,7 +37,7 @@
 
             <div class="flex-none w-1/2 p-10 pt-5">
                 <h3 class="text-2xl font-bold">
-                    <a href="/items/{{$item->id}}">{{$item->name}}</a>
+                    <a href="{{route('show-listing', ['item' => $item->id])}}">{{$item->name}}</a>
                 </h3>
                 <div class="text-xl mb-4">{{$item->description}}</div>
                 <x-item-tags :tags="$item->tags"/>
@@ -68,8 +68,8 @@
                 </div>
                 @else
                     <div class="flex mt-10">
-                        <a href="/items/{{$item->id}}/edit" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">Edit</a>
-                        <form action="/items/{{$item->id}}" method="POST">
+                        <a href="{{route('edit-listing-form', ['item' => $item->id])}}" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">Edit</a>
+                        <form action="{{route('delete-listing', ['item' => $item->id])}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">Delete</button>

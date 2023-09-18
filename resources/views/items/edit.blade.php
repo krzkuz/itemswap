@@ -2,7 +2,7 @@
 
 @extends('components.layout')
 @section('content')
-<div class="bg-zinc-600 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+<x-card>
     <header class="text-center">
         <h2 class="text-2xl font-bold uppercase mb-1">
             Edit your Listing
@@ -45,7 +45,7 @@
         @endforeach
     </div>
 
-    <form action="/items/{{$item->id}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('update-listing', ['item' => $item->id])}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-6">
@@ -114,12 +114,12 @@
         </div>
 
         <div class="mb-6">
-            <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+            <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
                 Update a lisitng
             </button>
 
-            <a href="/" class="text-black ml-4"> Back </a>
+            <a href="{{route('home')}}" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2"> Back </a>
         </div>
     </form>
-</div>
+</x-card>
 @endsection

@@ -19,36 +19,36 @@ use App\Http\Controllers\ConversationController;
 */
 // Items
 //Home page items
-Route::get('/', [ItemController::class, 'index']);
+Route::get('/', [ItemController::class, 'index'])->name('home');
 //Show logged user items
-Route::get('/items/manage', [ItemController::class, 'manage']);
+Route::get('/items/manage', [ItemController::class, 'manage'])->name('manage-listings');
 //Show form to create item
-Route::get('/items/create', [ItemController::class, 'create']);
+Route::get('/items/create', [ItemController::class, 'create'])->name('create-listing-form');
 //Create item in database
-Route::post('/items', [ItemController::class, 'store']);
+Route::post('/items', [ItemController::class, 'store'])->name('create-listing');
 //Show form to edit item
-Route::get('/items/{item}/edit', [ItemController::class, 'edit']);
+Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('edit-listing-form');
 //Show one item
-Route::get('/items/{item}', [ItemController::class, 'show']);
+Route::get('/items/{item}', [ItemController::class, 'show'])->name('show-listing');
 //Update item
-Route::put('/items/{item}', [ItemController::class, 'update']);
+Route::put('/items/{item}', [ItemController::class, 'update'])->name('update-listing');
 //Delete item
-Route::delete('/items/{item}', [ItemController::class, 'delete']);
+Route::delete('/items/{item}', [ItemController::class, 'delete'])->name('delete-listing');
 //Swap item request
 
 
 
 // Users
 // Show registration form
-Route::get('/register', [UserController::class, 'create']);
+Route::get('/register', [UserController::class, 'create'])->name('register');
 //Create new user
-Route::post('/users', [UserController::class, 'store']);
+Route::post('/users', [UserController::class, 'store'])->name('create-user');
 //Show login form
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
 //Login user
-Route::post('/authenticate', [UserController::class, 'authenticate']);
+Route::post('/authenticate', [UserController::class, 'authenticate'])->name('authenticate');
 //Logout user
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 //Show edit profile form
 Route::get('/edit-profile', [UserController::class, 'edit'])->name('edit-profile');
 //Update profile

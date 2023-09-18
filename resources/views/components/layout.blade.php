@@ -55,13 +55,13 @@
                 >
             </li>
             <li>
-                <a href="/items/manage" class="text-gray-400 hover:text-white"
+                <a href="{{route('manage-listings')}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-gear"></i>
                     Manage Listings</a
                 >
             </li>
             <li>
-                <form class="inline" action="/logout" method="POST">
+                <form class="inline" action="{{route('logout')}}" method="POST">
                     @csrf
                     <button type="submit" class="text-gray-400 hover:text-white">
                         <i class="fa-solid fa-door-closed"></i> Logout
@@ -70,12 +70,12 @@
             </li>
             @else
             <li>
-                <a href="/register" class="text-gray-400 hover:text-white"
+                <a href="{{route('register')}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-user-plus"></i> Register</a
                 >
             </li>
             <li>
-                <a href="/login" class="text-gray-400 hover:text-white"
+                <a href="{{route('login')}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-arrow-right-to-bracket"></i>
                     Login</a
                 >
@@ -92,7 +92,7 @@
         <p class="ml-2">Copyright &copy; 2023, All Rights reserved</p>
 
         <a
-            href="/items/create"
+            href="{{route('create-listing-form')}}"
             class="absolute top-1/3 right-10 bg-black text-gray-200 py-2 px-5 rounded-lg hover:text-laravel"
             >Post Listing</a
         >

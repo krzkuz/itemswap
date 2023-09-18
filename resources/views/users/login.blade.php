@@ -9,7 +9,7 @@
     <p class="mb-4">Log in to swap items</p>
 </header>
 
-<form action="/authenticate" method="POST">
+<form action="{{route('authenticate')}}" method="POST">
     @csrf
     <div class="mb-6">
         <label for="email" class="inline-block text-lg mb-2"
