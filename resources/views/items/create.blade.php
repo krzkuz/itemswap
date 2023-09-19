@@ -78,7 +78,7 @@
 
         <div class="mb-6">
             <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
-                Create a lisitng
+                Create a listing
             </button>
 
             <a href="/" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2"> Back </a>

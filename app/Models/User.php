@@ -54,4 +54,12 @@ class User extends Authenticatable
     public function sentMessages(){
         return $this->hasMany(Message::class, 'sender_id');
     }
+
+    public function swapsSent(){
+        return $this->hasMany(Swap::class, 'owner_b');
+    }
+
+    public function swapsReceived(){
+        return $this->hasMany(Swap::class, 'owner_a');
+    }
 }

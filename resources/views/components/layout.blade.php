@@ -49,7 +49,7 @@
                 >
             </li>
             <li>
-                <a href="/" class="text-gray-400 hover:text-white"
+                <a href="{{route('all-swaps')}}" class="text-gray-400 hover:text-white"
                     ><i class="fa-solid fa-right-left"></i>
                     Swaps</a
                 >
@@ -98,6 +98,5 @@
         >
     </footer>
     <x-flash-message/>
-
 </body>
 </html>

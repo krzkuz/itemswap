@@ -47,14 +47,13 @@
                 @if (auth()->id() != $item->user_id)
                 <div class="flex flex-wrap">
 
-                    <form action="" method="POST">
-                        @csrf
+                    <form action="{{route('swap-request', ['item' => $item->id])}}">
                         <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
                             <i class="fa-solid fa-right-left"></i> Swap
                         </button>
                     </form>
 
-                    <form action="{{route('create-conversation')}}" method="GET">
+                    <form action="{{route('create-conversation')}}">
                         @php
                         session([
                             'itemId' => $item->id,

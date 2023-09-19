@@ -86,7 +86,7 @@ class ItemController extends Controller
             $item->tags()->attach($newTag->id);
         }
 
-        return redirect('/')->with('message', 'You have created a listing');
+        return redirect()->route('home')->with('message', 'You have created a listing');
     }
 
     public function edit(Item $item){
@@ -128,7 +128,7 @@ class ItemController extends Controller
         
         $item->update($formFields);
 
-        return redirect('/')->with('message', 'Listing updated successfully');
+        return redirect()->route('home')->with('message', 'Listing updated successfully');
     }
 
     public function delete(Item $item){
@@ -137,6 +137,6 @@ class ItemController extends Controller
         }
 
         $item->delete();
-        return redirect('/')->with('message', 'Listing deleted successfully');
+        return redirect()->route('home')->with('message', 'Listing deleted successfully');
     }
 }

@@ -1,6 +1,6 @@
 @extends('components.layout')
 @section('content')
-<div class="flex justify-center h-screen ">
+<div class="flex justify-center h-screen">
     <div class="flex mt-10 w-5/6 h-4/6">
         <div class="w-7/12 bg-neutral-700 rounded px-2 py-4 overflow-y-auto">
             @if (isset($conversations))

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\SwapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +70,15 @@ Route::get(('/conversation/new'), [ConversationController::class, 'create'])->na
 Route::post('messages/send/{conversation}', [MessageController::class, 'send'])->name('send-message');
 //Show messages
 Route::get('/messages/{conversation?}', [MessageController::class, 'messages'])->name('messages');
+
+
+//Swaps
+//Show user's swaps
+Route::get('/swaps', [SwapController::class, 'all'])->name('all-swaps');
+//Swap request
+Route::get('/swaps/new/{item}', [SwapController::class, 'create'])->name('swap-request');
+//Single swap
+Route::get('/swaps/{swap}', [SwapController::class, 'show'])->name('show-swap');
+//Swap create
+Route::post('/swaps', [SwapController::class, 'store'])->name('create-swap');
 

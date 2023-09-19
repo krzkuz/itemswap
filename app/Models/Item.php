@@ -47,4 +47,12 @@ class Item extends Model
     public function images(){
         return $this->hasMany(Image::class);
     }
+
+    public function swapsOffered(){
+        return $this->hasMany(Swap::class, 'item_b');
+    }
+
+    public function swapsReceived(){
+        return $this->hasMany(Swap::class, 'item_a');
+    }
 }
