@@ -1,4 +1,6 @@
 @props(['item'])
+@props(['currentUserId'])
+
 
 <div class="flex justify-center mx-4 pb-5">
     <div class='bg-neutral-700 rounded p-6 m-25 w-5/6  h-4/6'>
@@ -79,9 +81,5 @@
             </div>
 
         </div>
-    </div>
-        
-                
-            
-
+    </div>    
 </div>

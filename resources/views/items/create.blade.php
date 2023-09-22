@@ -53,7 +53,7 @@
                 name="images[]"
                 multiple
             />
-            @error('image')
+            @error('images')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>                
             @enderror
         </div>
@@ -69,8 +69,7 @@
                 name="description"
                 rows="10"
                 placeholder="Include condition and other important details"
-                value="{{old('description')}}"
-            ></textarea>
+            >{{old('description')}}</textarea>
             @error('description')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>                
             @enderror

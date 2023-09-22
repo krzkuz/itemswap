@@ -10,7 +10,8 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
-        'image_path'
+        'image_path',
+        'cropped_image_path'
     ];
     public function item(){
         return $this->belongsTo(Item::class);

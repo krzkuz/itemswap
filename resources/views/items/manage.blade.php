@@ -11,4 +11,7 @@
     <x-item-manage-card :currentUserId="$currentUserId" :item="$item" />
 @endforeach
 
+<div class="flex justify-evenly mt-6 mb-6">
+    {{$items->links()}}
+</div>
 @endsection

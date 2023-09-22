@@ -18,6 +18,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->boolean('is_main')->default(false);
             $table->string('image_path');
+            $table->string('cropped_image_path');
             $table->timestamps();
         });
     }

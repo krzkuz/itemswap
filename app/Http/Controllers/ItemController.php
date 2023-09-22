@@ -7,6 +7,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Intervention\Image\Facades\Image as Img;
 
 class ItemController extends Controller
 {
@@ -15,12 +16,12 @@ class ItemController extends Controller
         $items = Item::with(['images' => function ($query){
             $query->orderBy('is_main', 'desc');
         }])->latest()
-            ->filter(request(['tag', 'search']))
-            ->simplePaginate(6);
+            ->filter(request(['tag', 'search', 'location']))
+            ->paginate(6);
 
         foreach($items as $item){
-            if(strlen($item->description)>700){
-                $item->description = substr($item->description, 0, 700) . '...';
+            if(strlen($item->name)>50){
+                $item->name = substr($item->name, 0, 50) . '...';
             }
         }
         return view('items.index', [
@@ -40,12 +41,11 @@ class ItemController extends Controller
 
     public function manage(){ 
         $currentUserId = auth()->id();
-        $items = auth()->user()
-            ->items()
+        $items = auth()->user()->items()->latest()
             ->with(['images' => function($query){
                 $query->orderBy('is_main', 'desc');
-        }])
-        ->simplePaginate(6);
+            }])
+            ->paginate(6);
 
         return view('items.manage', [
             'items' => $items,
@@ -62,6 +62,7 @@ class ItemController extends Controller
             'name' => 'required',
             'tags' => 'required',
             'description' => 'required',
+            'images' => 'image|mimes:jpeg,png,jpg'
         ]);        
 
         $formFields['user_id'] = auth()->id();
@@ -70,8 +71,26 @@ class ItemController extends Controller
         if($request->hasFile('images')){
             $firstIteration = true;
             foreach($request->file('images') as $image){
-                $imagePath = $image->store('images', 'public');
-                $newImage = new Image(['image_path' => $imagePath]);
+                $originalImagePath = $image->store('images', 'public');
+                $croppedImage = Img::make($image);
+
+                $width = $croppedImage->width();
+                $height = $croppedImage->height();
+                // Determine the size of the square crop
+                $size = min($width, $height);
+                // Calculate the crop position (centered)
+                $x = ($width - $size) / 2;
+                $y = ($height - $size) / 2;
+                // Crop the image to a square
+                $croppedImage->crop($size, $size, (int)$x, (int)$y)->encode('jpg');
+
+                $croppedImagePath = 'storage/images/cropped/' . uniqid() . '.jpg';
+                $croppedImage->save(public_path($croppedImagePath));
+                $newImage = new Image([
+                    'image_path' => $originalImagePath,
+                    'cropped_image_path' => $croppedImagePath
+                ]);
+
                 if($firstIteration){
                     $newImage->is_main = true;
                 }
@@ -120,8 +139,25 @@ class ItemController extends Controller
 
         if($request->hasFile('images')){
             foreach($request->file('images') as $image){
-                $imagePath = $image->store('images', 'public');
-                $newImage = new Image(['image_path' => $imagePath]);
+                $originalImagePath = $image->store('images', 'public');
+                $croppedImage = Img::make($image);
+
+                $width = $croppedImage->width();
+                $height = $croppedImage->height();
+                // Determine the size of the square crop
+                $size = min($width, $height);
+                // Calculate the crop position (centered)
+                $x = ($width - $size) / 2;
+                $y = ($height - $size) / 2;
+                // Crop the image to a square
+                $croppedImage->crop($size, $size, (int)$x, (int)$y)->encode('jpg');
+
+                $croppedImagePath = 'storage/images/cropped/' . uniqid() . '.jpg';
+                $croppedImage->save(public_path($croppedImagePath));
+                $newImage = new Image([
+                    'image_path' => $originalImagePath,
+                    'cropped_image_path' => $croppedImagePath
+                ]);
                 $item->images()->save($newImage);
             }
         }
