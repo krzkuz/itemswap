@@ -57,14 +57,18 @@ class SwapController extends Controller
         $ownerA = $request['requestedItemOwner'];
         $ownerB = auth()->id();
 
-        Swap::create([
+        $swap = Swap::firstOrCreate([
             'owner_a' => $ownerA,
             'owner_b' => $ownerB,
             'item_a' => $itemA,
             'item_b' => $itemB
         ]);
 
-        return redirect()->route('home')->with('message', 'You have sent a swap request');
+        if($swap->wasRecentlyCreated){
+            return redirect()->route('home')->with('message', 'You have sent a swap request');
+        }
+
+        return redirect()->back()->with('message', 'You have already sent this swap request');
     }
 
     public function show($id){
@@ -80,14 +84,13 @@ class SwapController extends Controller
         return view('swaps.show', [
             'swap' => $swap
         ]);
-        // $ownerA = $swap->ownerA;
-        // $ownerB = $swap->ownerB;
-        // $itemA = $swap->itemA;
-        // $itemB = $swap->itemB;
-        // $itemAImages = $itemA->images;
-        // $itemBImages = $itemB->images;
+    }
 
-
-
+    public function confirm($id){
+        $swap = Swap::find($id);
+        $swap->is_confirmed = true;
+        $swap->save();
+        
+        return redirect()->route('show-swap', ['swap' => $id])->with('message', 'You have confirmed this swap request');
     }
 }

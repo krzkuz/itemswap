@@ -21,8 +21,8 @@
         @foreach ($images as $image)
             <div class="flex items-center">
                 <img
-                class="w-28 h-28 p-5"
-                src="{{$image ? asset('storage/' . $image->image_path):
+                class="w-20 mx-5 my-2 rounded-md"
+                src="{{$image ? asset($image->cropped_image_path):
                 asset('images/no-image.png')}}"
                 alt=""
                 />

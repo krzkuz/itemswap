@@ -2,7 +2,7 @@
 @section('content')
 <div class="flex justify-center h-screen">
     <div class="flex mt-10 w-5/6 h-4/6">
-        <div class="w-7/12 bg-neutral-700 rounded px-2 py-4 overflow-y-auto">
+        <div class="w-7/12 bg-neutral-700 rounded px-2 py-4 overflow-y-auto mr-3">
             @if (isset($conversations))
                 @foreach ($conversations as $conversation)
                     <div>
@@ -10,38 +10,51 @@
                             $conversationImage = $conversation->item->images()->first();
                             $lastMessage = $conversation->messages()->latest()->first();
                         @endphp
-                        <a href="{{route('messages', ['conversation'=>$conversation->id])}}" class="">
-                            <div class="flex mx-4 border-b border-neutral-400 my-4">
-                                <img src="{{$conversationImage ? asset('storage/' . $conversationImage->image_path):
-                                asset('images/no-image.png')}}" alt="" class="h-16 w-2/12 rounded mb-5">
-                                <div class="ml-5">
-                                    <div class="flex">
-                                        <h3 class="font-bold mr-5">{{$conversation->item->name}}</h3>
-                                        <p class="text-xs">{{$lastMessage->created_at->format('m-d H:i')}}</p>
+                        <div class="border-b border-neutral-400">
+                            <a href="{{route('messages', ['conversation'=>$conversation->id])}}" class="">
+                                <div class="flex mx-4 my-4">
+                                    <div class="flex-none relative w-16 h-16">
+                                        <img src="{{$conversationImage ? asset($conversationImage->cropped_image_path):
+                                            asset('images/no-image.png')}}" alt="" class="absolute w-full h-full rounded">
                                     </div>
-                                    <p class="text-sm mb-5">{{ Str::limit($lastMessage->body, $limit = 60, $end = '...') }}</p>
+                                    
+                                    <div class="ml-5">
+                                        <div class="flex">
+                                            <h3 class="font-bold mr-5">{{$conversation->item->name}}</h3>
+                                            <p class="text-xs">{{$lastMessage->created_at->format('m-d H:i')}}</p>
+                                        </div>
+                                        <p class="text-sm">{{ Str::limit($lastMessage->body, $limit = 60, $end = '...') }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>                
+                            </a> 
+                        </div>               
                     </div>
                 @endforeach
             @endif
             
         </div>
-        <div class="w-5"></div>
+
         <div class="flex flex-col w-full bg-neutral-700 rounded px-4 py-4">
             @if ($activeConversation)
                 @php
                     $item = $activeConversation->item;
                 @endphp
-                <div class="flex mx-4 border-b border-neutral-400 my-4">
-                    <img src="{{$item->images()->first() ? asset('storage/' . $item->images()->first()->image_path):
-                    asset('images/no-image.png')}}" alt="" class="h-16 w-2/12 rounded mb-5">
-                    <div class="ml-5 flex flex-col justify-center">
-                        <h3 class="font-bold mr-5 mb-5">{{$activeConversation->item->name}}</h3>
+                <a href="{{route('show-listing', ['item' => $item->id])}}">
+                    <div class="border-b border-neutral-400">
+                        <div class="flex mx-4 my-4">
+                            <div class="flex-none relative w-16 h-16">
+                                <img src="{{$item->images()->first() ? asset($item->images()->first()->cropped_image_path):
+                                asset('images/no-image.png')}}" alt="" class="absolute w-full h-full rounded">
+                            </div>
+                            <div class="ml-5 flex flex-col justify-center">
+                                <h3 class="font-bold mr-5">{{$activeConversation->item->name}}</h3>
+                            </div>                    
+                        </div>
                     </div>
-                </div>
-                <div class="overflow-y-auto mx-4">
+                    
+                </a>
+
+                <div class="overflow-y-auto flex-grow mx-4">
                     @foreach ($activeConversation->messages as $message)
                         @if ($message->sender_id != auth()->id())
                             <div class="flex flex-col items-start">
@@ -65,7 +78,7 @@
                     @endforeach
                 </div>
                 
-                <div class="flex bg-neutral-100 rounded-md mt-2 mx-4">
+                <div class="flex mt-auto bg-neutral-100 rounded-md mt-2 mx-4">
                     <form action="{{route('send-message', ['conversation' => $activeConversation->id])}}" method="POST">
                         @csrf
                         @php

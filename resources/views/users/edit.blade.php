@@ -18,7 +18,7 @@
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="first_name"
-                value="{{$user->first_name}}"
+                value="{{$user->first_name ?? old('first_name')}}"
             />
             @error('first_name')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -33,7 +33,7 @@
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="last_name"
-                value="{{$user->last_name}}"
+                value="{{$user->last_name ?? old('last_name')}}"
             />
             @error('last_name')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -48,7 +48,7 @@
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="country"
-                value="{{$user->country}}"
+                value="{{$user->country ?? old('country')}}"
             />
             @error('country')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -63,7 +63,7 @@
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="city"
-                value="{{$user->city}}"
+                value="{{$user->city ?? old('city')}}"
             />
             @error('city')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -78,7 +78,7 @@
                 type="text"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="address"
-                value="{{$user->address}}"
+                value="{{$user->address ?? old('address')}}"
             />
             @error('address')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>

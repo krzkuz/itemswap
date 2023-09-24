@@ -1,6 +1,6 @@
 <form action="/">
     <div class="flex  justify-center">
-        <div class="flex flex-wrap lg:flex-no-wrap mt-2 w-1/2 rounded-lg">
+        <div class="flex flex-wrap lg:flex-nowrap mt-2 w-1/2 rounded-lg">
             <input
                 type="text"
                 name="search"
@@ -12,7 +12,7 @@
                 <input
                     type="text"
                     name="location"
-                    class="h-14 pl-8 w-full rounded-lg z-0"
+                    class="h-14 w-full pl-8 rounded-lg z-0"
                     placeholder="Location..."
                 />
 

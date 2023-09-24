@@ -11,6 +11,9 @@ class ImageController extends Controller
     public function destroy($id){
         $image = Image::find($id);
 
+        if($image->item->owner->id != auth()->id()){
+            abort(403, 'Unauthorized action');
+        }
         if(!$image){
             return redirect()->back()->with('message', 'Image not found');
         }
@@ -22,6 +25,9 @@ class ImageController extends Controller
     public function mainPicture($id){
         $image = Image::find($id);
         
+        if($image->item->owner->id != auth()->id()){
+            abort(403, 'Unauthorized action');
+        }
         if(!$image){
             return redirect()->back()->with('message', 'Image not found');
         }

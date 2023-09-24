@@ -10,19 +10,24 @@
             <div class="flex flex-col">
                 @if($mainPicture)
                     <img
+                    class="rounded mb-2"
+                    src="{{asset('storage/' . $mainPicture->image_path)}}"
+                    alt=""
+                    />
+                @else
+                    <img
                     class="rounded"
-                    src="{{$mainPicture ? asset('storage/' . $mainPicture->image_path):
-                    asset('images/no-image.png')}}"
+                    src="{{asset('images/no-image.png')}}"
                     alt=""
                     />
                 @endif
                 
-                <div class="flex">
+                <div class="flex flex-wrap">
                     @foreach ($item->images as $image)
                         @if (!$firstIteration)
                                 <img
-                                class="w-28 h-28 p-5"
-                                src="{{$image ? asset('storage/' . $image->image_path):
+                                class="w-20 mr-2 mt-2 rounded-md"
+                                src="{{$image ? asset($image->cropped_image_path):
                                 asset('images/no-image.png')}}"
                                 alt=""
                                 />

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->foreignId('item_b')
                 ->constrained('items', 'id')
                 ->onDelete('cascade');
+                $table->unique(['item_a', 'item_b']);
         });
     }
 

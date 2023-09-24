@@ -54,6 +54,10 @@ class ItemController extends Controller
     }
 
     public function create(){
+        $user =  auth()->user();
+        if(!$user->first_name){
+            return redirect()->route('edit-profile')->with('message', 'You have to add your personal data in order to post a listing');
+        }
         return view('items.create');
     }
 
@@ -62,7 +66,7 @@ class ItemController extends Controller
             'name' => 'required',
             'tags' => 'required',
             'description' => 'required',
-            'images' => 'image|mimes:jpeg,png,jpg'
+            'images.*' => 'image|mimes:jpeg,jpg,png'
         ]);        
 
         $formFields['user_id'] = auth()->id();
@@ -73,6 +77,7 @@ class ItemController extends Controller
             foreach($request->file('images') as $image){
                 $originalImagePath = $image->store('images', 'public');
                 $croppedImage = Img::make($image);
+                $croppedImage->orientate();
 
                 $width = $croppedImage->width();
                 $height = $croppedImage->height();
@@ -105,10 +110,20 @@ class ItemController extends Controller
             $item->tags()->attach($newTag->id);
         }
 
+        if(session('backLink')){
+            $link = session('backLink');
+            session()->forget('backLink');
+            return redirect($link);
+        }
+        
         return redirect()->route('home')->with('message', 'You have created a listing');
     }
 
     public function edit(Item $item){
+        if($item->owner->id != auth()->id()){
+            abort(403, 'Unauthorized action');
+        }
+
         $tagNames = $item->tags->pluck('name')->toArray();
         $images = $item->images()->orderBy('is_main', 'desc')->get();
         return view('items.edit', [
@@ -119,7 +134,7 @@ class ItemController extends Controller
     }
 
     public function update(Request $request, Item $item){
-        if($item->user_id != auth()->id()){
+        if($item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }
 
@@ -127,6 +142,7 @@ class ItemController extends Controller
             'name' => 'required',
             'tags' => 'required',
             'description' => 'required',
+            'images.*' => 'image|mimes:jpeg,jpg,png'
         ]);
 
         //Delete old tags
@@ -141,6 +157,7 @@ class ItemController extends Controller
             foreach($request->file('images') as $image){
                 $originalImagePath = $image->store('images', 'public');
                 $croppedImage = Img::make($image);
+                $croppedImage->orientate();
 
                 $width = $croppedImage->width();
                 $height = $croppedImage->height();
@@ -164,11 +181,11 @@ class ItemController extends Controller
         
         $item->update($formFields);
 
-        return redirect()->route('home')->with('message', 'Listing updated successfully');
+        return redirect()->route('show-listing', ['item' => $item->id])->with('message', 'Listing updated successfully');
     }
 
     public function delete(Item $item){
-        if($item->user_id != auth()->id()){
+        if($item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }
 
