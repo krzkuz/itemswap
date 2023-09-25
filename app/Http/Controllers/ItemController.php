@@ -13,9 +13,7 @@ class ItemController extends Controller
 {
     public function index(){
         $currentUserId = auth()->id();
-        $items = Item::with(['images' => function ($query){
-            $query->orderBy('is_main', 'desc');
-        }])->latest()
+        $items = Item::with('images')->latest()
             ->filter(request(['tag', 'search', 'location']))
             ->paginate(6);
 
@@ -42,9 +40,7 @@ class ItemController extends Controller
     public function manage(){ 
         $currentUserId = auth()->id();
         $items = auth()->user()->items()->latest()
-            ->with(['images' => function($query){
-                $query->orderBy('is_main', 'desc');
-            }])
+            ->with('images')
             ->paginate(6);
 
         return view('items.manage', [
@@ -125,7 +121,7 @@ class ItemController extends Controller
         }
 
         $tagNames = $item->tags->pluck('name')->toArray();
-        $images = $item->images()->orderBy('is_main', 'desc')->get();
+        $images = $item->images()->get();
         return view('items.edit', [
             'item' => $item,
             'images' => $images,

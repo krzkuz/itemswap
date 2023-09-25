@@ -59,7 +59,6 @@
                         @php
                         session([
                             'itemId' => $item->id,
-                            'recipientId' => $item->user_id
                         ]);
                         @endphp
                         <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">

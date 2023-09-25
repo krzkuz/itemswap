@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,13 +10,18 @@ use App\Http\Controllers\Controller;
 class ConversationController extends Controller
 {
     public function create(Request $request){
-        $participant1_id = (int)session('recipientId') ?? (int)$request['recipientId'];
-        $participant2_id = (int)auth()->id();
         $itemId = (int)session('itemId') ?? (int)$request['itemId'];
+        dd($itemId);
+
+        $ownerId = (int)Item::find($itemId)->owner->id;
+        $participant1_id = $request['recipientId'] ?? $ownerId;
+        // dd(session('recipientId'), $request['recipientId'], $ownerId);
+        
+        // dd($participant1_id);
+        $participant2_id = auth()->id();
         //sorting participants ids
         $sortedParticipantIds = [$participant1_id, $participant2_id];
         sort($sortedParticipantIds);
-        // dd($sortedParticipantIds);
 
         $conversation = Conversation::firstOrCreate([
             'item_id' => $itemId,
@@ -23,7 +29,7 @@ class ConversationController extends Controller
             'participant2_id' => $sortedParticipantIds[1]
         ]);
 
-        session()->forget('recipientId', 'itemId');
+        session()->forget('itemId');
 
         return view('messages.messages', [
             'activeConversation' => $conversation

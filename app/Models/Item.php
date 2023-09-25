@@ -51,7 +51,8 @@ class Item extends Model
     }
 
     public function images(){
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Image::class)
+            ->orderBy('is_main', 'desc');
     }
 
     public function swapsOffered(){
