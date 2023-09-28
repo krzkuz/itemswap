@@ -17,8 +17,11 @@ class MessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(),
-            'body' => $this->faker->text(),
+            'body' => fake()->text(),
         ];
     }
+
+    // public function sender(){
+    //     return $this->belongsTo(User::class, 'sender_id');
+    // }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,7 +37,7 @@ class MessageController extends Controller
         return view('messages.messages', [
             'conversations' => $conversations,
             'activeConversation' => $activeConversation,
-            'activeUserId' => auth()->id()
+            'activeUserId' => $userId
         ]);
     }
 }

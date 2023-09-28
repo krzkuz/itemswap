@@ -14,22 +14,22 @@ class SwapController extends Controller
         $swapsSent = $user->swapsSent()
             ->with('ownerB', 'itemA', 'itemB')
             ->with(['itemA.images'  => function($query){
-                $query->orderBy('is_main', 'desc')->first();
+                $query->first();
             }])
             ->with(['itemB.images'  => function($query){
-                $query->orderBy('is_main', 'desc')->first();
+                $query->first();
             }])
             ->get();
         $swapsReceived = $user->swapsReceived()
             ->with('ownerB', 'itemA', 'itemB')
             ->with(['itemA.images'  => function($query){
-                $query->orderBy('is_main', 'desc')->first();
+                $query->first();
             }])
             ->with(['itemB.images'  => function($query){
-                $query->orderBy('is_main', 'desc')->first();
+                $query->first();
             }])
             ->get();
-        // dd($swapsSent, $swapsReceived);
+
         return view('swaps.all', [
             'swapsSent' => $swapsSent,
             'swapsReceived' => $swapsReceived
@@ -41,7 +41,7 @@ class SwapController extends Controller
         $requestedItem = Item::find($itemId);
         $userItems = Item::where('user_id', $userId)
             ->with(['images' => function($query){
-            $query->orderBy('is_main', 'desc')->first();
+            $query->first();
             }])
             ->get();
 
@@ -73,13 +73,13 @@ class SwapController extends Controller
 
     public function show($id){
         $swap = Swap::with('ownerA', 'ownerB', 'itemA', 'itemB')
-        ->with(['itemA.images'  => function($query){
-            $query->orderBy('is_main', 'desc')->first();
-        }])
-        ->with(['itemB.images'  => function($query){
-            $query->orderBy('is_main', 'desc')->first();
-        }])
-        ->find($id);
+            ->with(['itemA.images'  => function($query){
+                $query->first();
+            }])
+            ->with(['itemB.images'  => function($query){
+                $query->first();
+            }])
+            ->find($id);
 
         return view('swaps.show', [
             'swap' => $swap

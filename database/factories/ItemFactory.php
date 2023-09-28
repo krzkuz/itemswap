@@ -17,8 +17,17 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'description' => $this->faker->text(),
+            'name' => fake()->word(),
+            'description' => fake()->text(),
         ];
     }
+
+    // public function owner()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+    
+    // public function tags(){
+    //     return $this->belongsToMany(Tag::class, 'item_tag', 'item_id', 'tag_id');
+    // }
 }

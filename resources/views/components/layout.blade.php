@@ -12,6 +12,8 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" type="text/css" href="{{asset('css/lightbox.min.css')}}">
+    <script type="text/javascript" src="{{asset('js/lightbox-plus-jquery.min.js')}}"></script>
     <title>ItemSwap | Exchange your items</title>
 
     <script src="//unpkg.com/alpinejs" defer></script>

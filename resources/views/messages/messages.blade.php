@@ -42,7 +42,7 @@
                     $item = $activeConversation->item;
                 @endphp
                 <a href="{{route('show-listing', ['item' => $item->id])}}">
-                    <div class="border-b border-neutral-400">
+                    <div class="border-b border-neutral-400 mb-5">
                         <div class="flex mx-4 my-4">
                             <div class="flex-none relative w-16 h-16">
                                 <img src="{{$item->images()->first() ? asset($item->images()->first()->cropped_image_path):
@@ -96,14 +96,14 @@
 
                         <div class="flex">
                             <textarea
-                            class="text-sm bg-neutral-100 rounded w-full resize-none px-4"
+                            class="text-sm bg-neutral-100 rounded w-full resize-none py-2 px-4"
                             name="body"
                             rows="2"
                             cols="200"
                             id="textInput"
 
                             ></textarea>
-                            <button class="mr-3" id="submitButton" disabled>
+                            <button type="submit" class="mr-3" id="submitButton">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
@@ -121,9 +121,7 @@
     </div>
 
 </div>
-@endsection
-
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
         const textInput = document.getElementById("textInput");
         const submitButton = document.getElementById("submitButton");
@@ -136,4 +134,6 @@
             }
         });
     });
-</script>
+</script> --}}
+@endsection
+

@@ -22,7 +22,7 @@ use App\Http\Controllers\SwapController;
 Route::middleware(['auth'])->group(function () {
     //Messages
     //Show message creation form
-    Route::get(('/conversation/new'), [ConversationController::class, 'create'])->name('create-conversation');
+    Route::get(('/conversation/new/{item}'), [ConversationController::class, 'create'])->name('create-conversation');
     //Create message
     Route::post('messages/send/{conversation}', [MessageController::class, 'send'])->name('send-message');
     //Show messages

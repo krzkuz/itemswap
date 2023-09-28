@@ -10,25 +10,24 @@
                 $mainPicture = $item->images->first();          
             @endphp
             <div class="flex flex-col">
-                @if($mainPicture)
-                    <img
-                    class="rounded"
-                    src="{{$mainPicture ? asset('storage/' . $mainPicture->image_path):
-                    asset('images/no-image.png')}}"
-                    alt=""
-                    />
-                @endif
+                <img
+                class="rounded mb-1"
+                src="{{$mainPicture ? asset('storage/' . $mainPicture->image_path):
+                asset('images/no-image.png')}}"
+                alt=""
+                />
                 
-                <div class="flex">
+                <div class="flex flex-wrap">
                     @foreach ($item->images as $image)
-                        @if (!$firstIteration)
-                                <img
-                                class="w-28 h-28 p-5"
-                                src="{{$image ? asset('storage/' . $image->image_path):
-                                asset('images/no-image.png')}}"
-                                alt=""
-                                />
-                        @endif
+                        <a href="{{asset('storage/' . $image->image_path)}}" data-lightbox="mygallery">
+                            <img
+                            class="w-20 h-20 m-1 rounded-md hover:grayscale 
+                            transform scale-100 hover:scale-110 transition-transform"
+                            src="{{asset($image->cropped_image_path)}}"
+                            alt=""
+                            />
+                        </a>                            
+
                         @php
                             $firstIteration = false;
                         @endphp
@@ -37,7 +36,7 @@
                  
             </div>
 
-            <div class="flex-none w-1/2 p-10 pt-5">
+            <div class="flex-none w-1/2 p-5">
                 <h3 class="text-2xl font-bold">
                     <a href="{{route('show-listing', ['item' => $item->id])}}">{{$item->name}}</a>
                 </h3>
@@ -48,23 +47,13 @@
                 </div>
                 @if (auth()->id() != $item->user_id)
                 <div class="flex flex-wrap">
+                    <a href="{{route('swap-request', ['item' => $item->id])}}" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
+                        <i class="fa-solid fa-right-left"></i> Swap
+                    </a>
 
-                    <form action="{{route('swap-request', ['item' => $item->id])}}">
-                        <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
-                            <i class="fa-solid fa-right-left"></i> Swap
-                        </button>
-                    </form>
-
-                    <form action="{{route('create-conversation')}}">
-                        @php
-                        session([
-                            'itemId' => $item->id,
-                        ]);
-                        @endphp
-                        <button class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
-                            <i class="fa-solid fa-message"></i> Message
-                        </button>
-                    </form>
+                    <a href="{{route('create-conversation', ['item' => $item->id])}}" class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-black mr-2 mb-2">
+                        <i class="fa-solid fa-message"></i> Message
+                    </a>
                 </div>
                 @else
                     <div class="flex mt-10">

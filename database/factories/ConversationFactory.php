@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Conversation>
  */
-class TagFactory extends Factory
+class ConversationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            //
         ];
     }
-
-    // public function items(){
-    //     return $this->belongsToMany(Item::class, 'item_tag', 'tag_id', 'item_id');
-    // }
 }

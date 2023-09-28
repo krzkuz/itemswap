@@ -11,6 +11,34 @@ use Intervention\Image\Facades\Image as Img;
 
 class ItemController extends Controller
 {
+
+    protected function processPicture($image, $isMain=false){
+        $originalImagePath = $image->store('images', 'public');
+        $croppedImage = Img::make($image);
+        $croppedImage->orientate();
+
+        $width = $croppedImage->width();
+        $height = $croppedImage->height();
+        // Determine the size of the square crop
+        $size = min($width, $height);
+        // Calculate the crop position (centered)
+        $x = ($width - $size) / 2;
+        $y = ($height - $size) / 2;
+        // Crop the image to a square
+        $croppedImage->crop($size, $size, (int)$x, (int)$y)->encode('jpg');
+
+        $croppedImagePath = 'storage/images/cropped/' . uniqid() . '.jpg';
+        $croppedImage->save(public_path($croppedImagePath));
+        $newImage = new Image([
+            'image_path' => $originalImagePath,
+            'cropped_image_path' => $croppedImagePath
+        ]);
+        if($isMain){
+            $newImage->is_main = true;
+        }
+        return $newImage;
+    }
+
     public function index(){
         $currentUserId = auth()->id();
         $items = Item::with('images')->latest()
@@ -71,30 +99,8 @@ class ItemController extends Controller
         if($request->hasFile('images')){
             $firstIteration = true;
             foreach($request->file('images') as $image){
-                $originalImagePath = $image->store('images', 'public');
-                $croppedImage = Img::make($image);
-                $croppedImage->orientate();
-
-                $width = $croppedImage->width();
-                $height = $croppedImage->height();
-                // Determine the size of the square crop
-                $size = min($width, $height);
-                // Calculate the crop position (centered)
-                $x = ($width - $size) / 2;
-                $y = ($height - $size) / 2;
-                // Crop the image to a square
-                $croppedImage->crop($size, $size, (int)$x, (int)$y)->encode('jpg');
-
-                $croppedImagePath = 'storage/images/cropped/' . uniqid() . '.jpg';
-                $croppedImage->save(public_path($croppedImagePath));
-                $newImage = new Image([
-                    'image_path' => $originalImagePath,
-                    'cropped_image_path' => $croppedImagePath
-                ]);
-
-                if($firstIteration){
-                    $newImage->is_main = true;
-                }
+                $newImage = $firstIteration ? $this->processPicture($image, true) : 
+                    $this->processPicture($image);
                 $firstIteration = false;
                 $item->images()->save($newImage);
             }
@@ -151,33 +157,15 @@ class ItemController extends Controller
 
         if($request->hasFile('images')){
             foreach($request->file('images') as $image){
-                $originalImagePath = $image->store('images', 'public');
-                $croppedImage = Img::make($image);
-                $croppedImage->orientate();
-
-                $width = $croppedImage->width();
-                $height = $croppedImage->height();
-                // Determine the size of the square crop
-                $size = min($width, $height);
-                // Calculate the crop position (centered)
-                $x = ($width - $size) / 2;
-                $y = ($height - $size) / 2;
-                // Crop the image to a square
-                $croppedImage->crop($size, $size, (int)$x, (int)$y)->encode('jpg');
-
-                $croppedImagePath = 'storage/images/cropped/' . uniqid() . '.jpg';
-                $croppedImage->save(public_path($croppedImagePath));
-                $newImage = new Image([
-                    'image_path' => $originalImagePath,
-                    'cropped_image_path' => $croppedImagePath
-                ]);
+                $newImage = $this->processPicture($image);
                 $item->images()->save($newImage);
             }
         }
         
         $item->update($formFields);
 
-        return redirect()->route('show-listing', ['item' => $item->id])->with('message', 'Listing updated successfully');
+        return redirect()->route('show-listing', ['item' => $item->id])
+            ->with('message', 'Listing updated successfully');
     }
 
     public function delete(Item $item){
@@ -188,4 +176,5 @@ class ItemController extends Controller
         $item->delete();
         return redirect()->route('home')->with('message', 'Listing deleted successfully');
     }
+
 }

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
  */
-class TagFactory extends Factory
+class ImageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,8 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'image_path' => fake()->imageUrl($width=1920, $height=1080),
+            'cropped_image_path' => fake()->imageUrl($width=400, $height=400)
         ];
     }
-
-    // public function items(){
-    //     return $this->belongsToMany(Item::class, 'item_tag', 'tag_id', 'item_id');
-    // }
 }
