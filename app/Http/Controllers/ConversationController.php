@@ -17,14 +17,12 @@ class ConversationController extends Controller
         $sortedParticipantIds = [$participant1_id, $participant2_id];
         sort($sortedParticipantIds);
 
-        $conversation = Conversation::firstOrCreate([
+        $activeConversation = Conversation::firstOrCreate([
             'item_id' => $itemId,
             'participant1_id' => $sortedParticipantIds[0],
             'participant2_id' => $sortedParticipantIds[1]
         ]);
 
-        return view('messages.messages', [
-            'activeConversation' => $conversation
-        ]);
+        return view('messages.messages', compact('activeConversation'));
     }
 }

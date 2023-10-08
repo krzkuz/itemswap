@@ -17,8 +17,7 @@ class ItemsTest extends TestCase
     private Item $item;
     
 
-    protected function setUp(): void
-    {
+    protected function setUp(): void {
         parent::setUp();
 
         $this->user = User::factory()
@@ -29,8 +28,7 @@ class ItemsTest extends TestCase
             ->create();
     }
 
-    public function test_create_item_successful()
-    {
+    public function test_create_item_successful() : void {
         $item = [
             'name' => 't-shirt',
             'description' =>'some description',            
@@ -42,8 +40,7 @@ class ItemsTest extends TestCase
         $this->assertDatabaseHas('items', $item);
     }
 
-    public function test_update_item_validation_errors_redirects_back()
-    {
+    public function test_update_item_validation_errors_redirects_back() : void {
         $item = Item::first();
 
         $response = $this->actingAs($this->user)
@@ -56,8 +53,7 @@ class ItemsTest extends TestCase
         $response->assertSessionHasErrors(['name', 'description', 'tags']);
     }
 
-    public function test_item_delete_successful()
-    {
+    public function test_item_delete_successful() : void {
         $item = Item::first();
 
         $response = $this->actingAs($this->user)
@@ -66,8 +62,7 @@ class ItemsTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
     }
 
-    public function test_item_can_be_deleted_only_by_listing_owner()
-    {
+    public function test_item_can_be_deleted_only_by_listing_owner() : void {
         $user = User::factory()->create();
         $item = Item::first();
 

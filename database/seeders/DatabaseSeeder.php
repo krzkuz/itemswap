@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $users = User::factory(5)->create();
         User::factory(1)->create();
-        $tag = Tag::factory(1)->create();
+        Tag::factory(1)->create();
 
         foreach ($users as $user){
             $item = Item::factory(1)->create([

@@ -2,28 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Image;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+
 
 class ImageController extends Controller
 {
-    public function destroy($id){
+    public function destroy(int $id) : RedirectResponse {
         $image = Image::find($id);
         if(!$image){
-            return redirect()->back()->with('message', 'Image not found');
+            return redirect()
+                ->back()
+                ->with('message', 'Image not found');
         }
         if($image->item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }     
         $image->delete();
-        return redirect()->back()->with('message', 'Image successfully deleted');
+
+        return redirect()
+            ->back()
+            ->with('message', 'Image successfully deleted');
     }
 
-    public function mainPicture($id){
+    public function mainPicture(int $id) : RedirectResponse {
         $image = Image::find($id);
         if(!$image){
-            return redirect()->back()->with('message', 'Image not found');
+            return redirect()
+                ->back()
+                ->with('message', 'Image not found');
         }
         if($image->item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
@@ -40,6 +48,9 @@ class ImageController extends Controller
 
         $image->is_main = true;
         $image->save();
-        return redirect()->back()->with('message', 'Image set as main successfully');
+
+        return redirect()
+            ->back()
+            ->with('message', 'Image set as main successfully');
     }
 }

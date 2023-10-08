@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,9 +17,9 @@ class Item extends Model
         'user_id'
     ];
 
-    public function scopeFilter($query, array $filters){
+    public function scopeFilter(Builder $query, array $filters){
         if ($filters['tag'] ?? false) {
-            $query->whereHas('tags', function($tagQuery){
+            $query->whereHas('tags', function(Builder $tagQuery){
                 $tagQuery->where('name', 'like', '%' . request('tag') . '%');
             });
         }
@@ -26,13 +27,13 @@ class Item extends Model
         if ($filters['search'] ?? false){
             $query->where('name', 'like', '%' . request('search') . '%')
             ->orWhere('description', 'like', '%' . request('search') . '%')
-            ->orWhereHas('tags', function($tagQuery){
+            ->orWhereHas('tags', function(Builder $tagQuery){
                 $tagQuery->where('name', 'like', '%' . request('search') . '%');
             });
         }
 
         if($filters['location'] ?? false){
-            $query->whereHas('owner', function($locationQuery){
+            $query->whereHas('owner', function(Builder $locationQuery){
                 $locationQuery->where('city', request('location'));
             });
         }

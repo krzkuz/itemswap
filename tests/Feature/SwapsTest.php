@@ -44,7 +44,7 @@ class SwapsTest extends TestCase
 
     }
 
-    public function test_swap_created_successfuly(){
+    public function test_swap_created_successfuly() : void {
         $response = $this->actingAs($this->user1)
             ->post('swaps/', [
                 'requestedItemOwner' => $this->user2->id,
@@ -56,7 +56,7 @@ class SwapsTest extends TestCase
         $this->assertDatabaseCount('swaps', 2);
     }
 
-    public function test_user_can_see_own_swaps(){
+    public function test_user_can_see_own_swaps() : void {
         $response = $this->actingAs($this->user1)
             ->get('swaps/');
         
@@ -72,7 +72,7 @@ class SwapsTest extends TestCase
         });
     }
 
-    public function test_user_cannot_see_swaps_not_owned_by_them(){
+    public function test_user_cannot_see_swaps_not_owned_by_them() : void {
         $user = User::factory()->create();
         $response = $this->actingAs($user)
             ->get('swaps/');

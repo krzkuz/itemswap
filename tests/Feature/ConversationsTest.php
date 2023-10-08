@@ -20,8 +20,7 @@ class ConversationsTest extends TestCase
     // private Item $item;
     
 
-    protected function setUp(): void
-    {
+    protected function setUp(): void {
         parent::setUp();
 
         $this->participant1 = User::factory()
@@ -34,8 +33,7 @@ class ConversationsTest extends TestCase
 
     }
 
-    public function test_conversation_created_successfuly()
-    {   
+    public function test_conversation_created_successfuly() : void {   
         $item = Item::first();
 
         $response = $this->actingAs($this->participant2)
@@ -45,8 +43,7 @@ class ConversationsTest extends TestCase
         $this->assertDatabaseCount('conversations', 1);
     }
 
-    public function test_message_created_successfuly()
-    {   
+    public function test_message_created_successfuly() : void {   
         $item = Item::first();
 
         $this->actingAs($this->participant2)
@@ -63,8 +60,7 @@ class ConversationsTest extends TestCase
         $this->assertEquals('hello', $message->body);
     }
 
-    public function test_no_access_to_messages_for_unauthenticated_user()
-    {
+    public function test_no_access_to_messages_for_unauthenticated_user() : void {
         $response = $this->get('messages');
         $response->assertStatus(302);
     }

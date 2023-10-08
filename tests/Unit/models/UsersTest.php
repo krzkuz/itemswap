@@ -24,7 +24,7 @@ class UsersTest extends TestCase
         $this->assertNotEmpty($this->user->id);
     }
 
-    public function test_search_user_by_id()
+    public function test_search_user_by_id() : void
     {
         $userId = $this->user->id;
         $userFound = User::find($userId);

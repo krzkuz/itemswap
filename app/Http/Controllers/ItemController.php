@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Item;
 use App\Models\Image;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
 use Intervention\Image\Facades\Image as Img;
 
 class ItemController extends Controller
 {
 
-    protected function processPicture($image, $isMain=false){
+    protected function processPicture(Image $image, bool $isMain=false) : Image {
         $originalImagePath = $image->store('images', 'public');
         $croppedImage = Img::make($image);
         $croppedImage->orientate();
@@ -33,9 +35,11 @@ class ItemController extends Controller
             'image_path' => $originalImagePath,
             'cropped_image_path' => $croppedImagePath
         ]);
+        
         if($isMain){
             $newImage->is_main = true;
         }
+
         return $newImage;
     }
 
@@ -46,46 +50,42 @@ class ItemController extends Controller
             ->paginate(6);
 
         foreach($items as $item){
-            if(strlen($item->name)>50){
+            if(strlen($item->name) > 50){
                 $item->name = substr($item->name, 0, 50) . '...';
             }
         }
-        return view('items.index', [
-            'items' => $items,
-            'currentUserId' => $currentUserId,
-        ]);
+
+        return view('items.index', compact('items', 'currentUserId'));
     }
 
-    public function show(Item $item){
+    public function show(Item $item) : View {
         $currentUserId = auth()->id();
 
-        return view('items.show', [
-            'item' => $item,
-            'currentUserId' => $currentUserId,
-        ]);
+        return view('items.show', compact('item', 'currentUserId'));
     }
 
-    public function manage(){ 
+    public function manage() : View { 
         $currentUserId = auth()->id();
         $items = auth()->user()->items()->latest()
             ->with('images')
             ->paginate(6);
 
-        return view('items.manage', [
-            'items' => $items,
-            'currentUserId' => $currentUserId,
-        ]);
+        return view('items.manage', compact('items', 'currentUserId'));
     }
 
-    public function create(){
+    public function create() : View {
         $user =  auth()->user();
+
         if(!$user->first_name){
-            return redirect()->route('edit-profile')->with('message', 'You have to add your personal data in order to post a listing');
+            return redirect()
+                ->route('edit-profile')
+                ->with('message', 'You have to add your personal data in order to post a listing');
         }
+
         return view('items.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request) : RedirectResponse{
         $formFields = $request->validate([
             'name' => 'required',
             'tags' => 'required',
@@ -118,24 +118,24 @@ class ItemController extends Controller
             return redirect($link);
         }
         
-        return redirect()->route('home')->with('message', 'You have created a listing');
+        return redirect()
+            ->route('home')
+            ->with('message', 'You have created a listing');
     }
 
-    public function edit(Item $item){
+    public function edit(Item $item) : View {
         if($item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }
 
         $tagNames = $item->tags->pluck('name')->toArray();
-        $images = $item->images()->get();
-        return view('items.edit', [
-            'item' => $item,
-            'images' => $images,
-            'tags' => implode(',', $tagNames)
-        ]);
+        $tags = implode(',', $tagNames);
+        $images = $item->images;
+
+        return view('items.edit', compact('item', 'images', 'tags'));
     }
 
-    public function update(Request $request, Item $item){
+    public function update(Request $request, Item $item) : RedirectResponse {
         if($item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }
@@ -164,17 +164,20 @@ class ItemController extends Controller
         
         $item->update($formFields);
 
-        return redirect()->route('show-listing', ['item' => $item->id])
+        return redirect()
+            ->route('show-listing', ['item' => $item->id])
             ->with('message', 'Listing updated successfully');
     }
 
-    public function delete(Item $item){
+    public function delete(Item $item) : RedirectResponse{
         if($item->owner->id != auth()->id()){
             abort(403, 'Unauthorized action');
         }
 
         $item->delete();
-        return redirect()->route('home')->with('message', 'Listing deleted successfully');
-    }
 
+        return redirect()
+            ->route('home')
+            ->with('message', 'Listing deleted successfully');
+    }
 }
